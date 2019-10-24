@@ -22,7 +22,6 @@ defmodule BlogWeb do
       use Phoenix.Controller, namespace: BlogWeb
 
       import Plug.Conn
-      import BlogWeb.Gettext
       alias BlogWeb.Router.Helpers, as: Routes
     end
   end
@@ -40,7 +39,6 @@ defmodule BlogWeb do
       use Phoenix.HTML
 
       import BlogWeb.ErrorHelpers
-      import BlogWeb.Gettext
       alias BlogWeb.Router.Helpers, as: Routes
     end
   end
@@ -56,7 +54,6 @@ defmodule BlogWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import BlogWeb.Gettext
     end
   end
 

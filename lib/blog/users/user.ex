@@ -7,7 +7,7 @@ defmodule Blog.Users.User do
     field :username, :string
     field :password_hash, :string
 
-    timestamps(:utc_datetime_usec)
+    timestamps(type: :utc_datetime_usec)
   end
 
   @fields [:username, :password_hash]
