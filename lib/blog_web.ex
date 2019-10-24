@@ -38,7 +38,6 @@ defmodule BlogWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import BlogWeb.ErrorHelpers
       alias BlogWeb.Router.Helpers, as: Routes
     end
   end
