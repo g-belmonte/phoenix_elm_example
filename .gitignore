@@ -35,3 +35,6 @@ npm-debug.log
 
 # Ignore elm-stuff
 elm-stuff
+
+# Notes
+/notes.org
