@@ -18,9 +18,17 @@ defmodule BlogWeb.Resolvers.Users do
   #                                  Mutations
   # ===============================================================================
   def create(_, args, _) do
-    user =
-      %User{}
-      |> User.changeset(args)
-      |> Repo.insert()
+    %User{}
+    |> User.changeset(args)
+    |> Repo.insert()
+  end
+
+  def delete(_, %{username: username}, _) do
+    User
+    |> Repo.get_by(username: username)
+    |> case do
+         nil -> {:error, "User not found"}
+         user -> Repo.delete(user)
+       end
   end
 end
