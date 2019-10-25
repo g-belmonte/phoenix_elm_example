@@ -2,10 +2,25 @@ defmodule BlogWeb.Resolvers.Users do
   alias Blog.Users.User
   alias Blog.Repo
 
-  def get_by_email(_, %{email: email}, _) do
-    case Repo.get_by(User, email: email) do
-      {:ok, user} -> {:ok, user}
-      {:error, reason} -> {:error, reason}
+  # ===============================================================================
+  #                                   Queries
+  # ===============================================================================
+  def get_by_username(_, %{username: username}, _) do
+    User
+    |> Repo.get_by(username: username)
+    |> case do
+      nil -> {:error, "User not found"}
+      user -> {:ok, user}
     end
+  end
+
+  # ===============================================================================
+  #                                  Mutations
+  # ===============================================================================
+  def create(_, args, _) do
+    user =
+      %User{}
+      |> User.changeset(args)
+      |> Repo.insert()
   end
 end

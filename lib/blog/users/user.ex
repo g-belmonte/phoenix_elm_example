@@ -10,12 +10,12 @@ defmodule Blog.Users.User do
     timestamps(type: :utc_datetime_usec)
   end
 
-  @fields [:username, :password_hash]
   @doc false
-  def changeset(%__MODULE__{} = user, params \\ %{}) do
+  def changeset(user, params \\ %{}) do
     user
-    |> cast(params, @fields)
-    |> validate_required(@fields)
+    |> cast(params, [:username, :password_hash])
+    |> validate_required([:username, :password_hash])
+    |> unique_constraint(:username)
   end
 
 end
