@@ -27,8 +27,8 @@ defmodule BlogWeb.Resolvers.Users do
     User
     |> Repo.get_by(username: username)
     |> case do
-         nil -> {:error, "User not found"}
-         user -> Repo.delete(user)
-       end
+      nil -> {:error, "User not found"}
+      user -> Repo.delete(user)
+    end
   end
 end

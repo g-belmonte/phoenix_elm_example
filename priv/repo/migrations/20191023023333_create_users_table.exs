@@ -10,6 +10,6 @@ defmodule Blog.Repo.Migrations.CreateUsersTable do
       timestamps(type: :utc_datetime_usec)
     end
 
-    create index(:users, [:username])
+    create unique_index(:users, [:username])
   end
 end

@@ -19,7 +19,6 @@ defmodule BlogWeb.Router do
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: BlogWeb.Schema
 
     forward "/", Absinthe.Plug, schema: BlogWeb.Schema
-
   end
 
   scope "/", BlogWeb do
@@ -27,5 +26,4 @@ defmodule BlogWeb.Router do
 
     get "/", PageController, :index
   end
-
 end

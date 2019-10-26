@@ -15,7 +15,6 @@ defmodule Blog.Users.User do
     user
     |> cast(params, [:username, :password_hash])
     |> validate_required([:username, :password_hash])
-    |> unique_constraint(:username)
+    |> unique_constraint(:username, message: "This username has already been taken")
   end
-
 end
