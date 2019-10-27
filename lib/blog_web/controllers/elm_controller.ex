@@ -1,7 +1,7 @@
-defmodule BlogWeb.PageController do
+defmodule BlogWeb.ElmController do
   use BlogWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    render(conn, "app.html")
   end
 end

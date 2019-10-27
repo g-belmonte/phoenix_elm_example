@@ -4,7 +4,6 @@ defmodule BlogWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -17,13 +16,12 @@ defmodule BlogWeb.Router do
     pipe_through :api
 
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: BlogWeb.Schema
-
     forward "/", Absinthe.Plug, schema: BlogWeb.Schema
   end
 
   scope "/", BlogWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", ElmController, :index
   end
 end
