@@ -1,7 +1,6 @@
 import Browser
 import Browser.Navigation as Navigation
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (text)
 import Url
 
 -- =============================================================================
