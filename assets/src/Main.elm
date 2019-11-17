@@ -93,7 +93,7 @@ viewNavbar _ =
     H.nav []
         [ H.div [ A.class "nav-wrapper purple darken-1"]
               [ H.ul [ A.class "left" ]
-                    [ H.li [] [ H.a [ A.href "#" ] [ H.i [ A.class "material-icons" ] [ text "menu" ] ] ] ]
+                    [ H.li [] [ H.a [ A.href "/" ] [ H.i [ A.class "material-icons" ] [ text "home" ] ] ] ]
               , H.a [ A.href "#", A.class "brand-logo center" ] [ text "Logo" ]
               , H.ul [ A.class "right" ]
                   [ H.li [] [ H.a [ A.href "#" ] [ H.i [ A.class "material-icons" ] [ text "person" ] ] ] ]
