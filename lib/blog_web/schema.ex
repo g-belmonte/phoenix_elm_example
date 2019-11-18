@@ -9,7 +9,7 @@ defmodule BlogWeb.Schema do
     @desc "Query a user by its username"
     field :user, :user do
       arg(:username, non_null(:string))
-      resolve(&Resolvers.Users.get_by_username/3)
+      resolve(&Resolvers.Users.get_by_username/2)
     end
   end
 
@@ -18,14 +18,15 @@ defmodule BlogWeb.Schema do
     @desc "Create a user"
     field :create_user, :user do
       arg(:username, non_null(:string))
-      arg(:password_hash, non_null(:string))
-      resolve(&Resolvers.Users.create/3)
+      arg(:password, non_null(:string))
+      resolve(&Resolvers.Users.create/2)
     end
 
     @desc "Delete a user"
     field :delete_user, :user do
       arg(:username, non_null(:string))
-      resolve(&Resolvers.Users.delete/3)
+      # TODO Add authorization middleware
+      resolve(&Resolvers.Users.delete/2)
     end
   end
 
