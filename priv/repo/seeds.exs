@@ -9,3 +9,21 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+alias Blog.Users
+
+users = [
+  %{
+    username: "john",
+    password: "password"
+  },
+  %{
+    username: "jane",
+    password: "password"
+  },
+  %{
+    username: "wee",
+    password: "password"
+  }
+]
+
+Enum.each(users, &Users.create/1)
