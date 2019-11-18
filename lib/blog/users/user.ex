@@ -2,10 +2,11 @@ defmodule Blog.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
   schema "users" do
     field :username, :string
     field :password_hash, :string
+
+    has_many :posts, Blog.Posts.Post
 
     timestamps(type: :utc_datetime_usec)
   end
