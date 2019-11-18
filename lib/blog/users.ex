@@ -21,9 +21,7 @@ defmodule Blog.Users do
       |> Map.put(:password_hash, Base.encode16(:crypto.hash(:sha256, password)))
       |> Map.delete(:password)
 
-    changeset =
-      %User{}
-      |> User.changeset(args)
+    changeset = User.changeset(%User{}, args)
 
     if changeset.valid? do
       changeset
