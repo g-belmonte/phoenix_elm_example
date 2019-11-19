@@ -45,7 +45,9 @@ defmodule Blog.MixProject do
       {:plug_cowboy, "~> 2.1"},
       {:absinthe, "~> 1.4"},
       {:absinthe_plug, "~> 1.4"},
-      {:absinthe_ecto, ">= 0.0.0"}
+      {:absinthe_ecto, ">= 0.0.0"},
+      {:redix, ">= 0.0.0"},
+      {:castore, ">= 0.0.0"}
     ]
   end
 
