@@ -12,6 +12,12 @@ defmodule BlogWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/auth", BlogWeb do
+    pipe_through :api
+
+    post "/", AuthController, :login
+  end
+
   scope "/api" do
     pipe_through :api
 
