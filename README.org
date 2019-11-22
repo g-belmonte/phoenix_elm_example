@@ -15,4 +15,4 @@ To run the server locally:
 - Create and migrate database ~mix ecto.setup~
 - Start server ~mix phx.server~
 
-Now navigate to [localhost:4000](http://localhost:4000).
+Now navigate to [[http://localhost:4000][localhost:4000]]
