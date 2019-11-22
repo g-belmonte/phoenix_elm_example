@@ -28,6 +28,6 @@ defmodule BlogWeb.Router do
   scope "/", BlogWeb do
     pipe_through :browser
 
-    get "/", ElmController, :index
+    get "/*path", ElmController, :index
   end
 end
