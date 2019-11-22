@@ -112,7 +112,7 @@ viewNavbar _ =
                     [ H.li [] [ H.a [ A.href "/" ] [ H.i [ A.class "material-icons" ] [ text "home" ] ] ] ]
               , H.a [ A.href "#", A.class "brand-logo center" ] [ text "Logo" ]
               , H.ul [ A.class "right" ]
-                  [ H.li [] [ H.a [ A.href "login" ] [text "Sign in"] ]
+                  [ H.li [] [ H.a [ A.href "login" ] [ text "Sign in" ] ]
                   , H.li [] [ H.a [ A.href "#" ] [ H.i [ A.class "material-icons" ] [ text "person" ] ] ]
                   ]
               ]
