@@ -3,6 +3,7 @@ import Browser.Navigation as Navigation
 import Html as H exposing (Html, text)
 import Html.Attributes as A
 import Url
+import Url.Parser as Parser exposing (Parser, (</>), oneOf)
 
 -- =============================================================================
 --                                    MAIN
@@ -36,6 +37,21 @@ init : () -> Url.Url -> Navigation.Key -> (Model, Cmd Msg)
 init flags url key =
     ( Model key url, Cmd.none)
 
+
+-- =============================================================================
+--                                   ROUTER
+-- =============================================================================
+
+type Route
+    = Feed
+    | Login
+
+routeParser : Parser (Route -> a) a
+routeParser =
+    oneOf
+        [ Parser.map Feed Parser.top
+        , Parser.map Login (Parser.s "login")
+        ]
 
 -- =============================================================================
 --                                   UPDATE
