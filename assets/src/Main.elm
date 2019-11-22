@@ -155,4 +155,25 @@ viewFeed _ =
 
 viewLogin : () -> Html msg
 viewLogin _ =
-    H.div [] [ text "LOGIN" ]
+    H.div [ A.class "row" ]
+        [ H.form [ A.action "#", A.class "col s6 offset-s4" ]
+              [ H.div [ A.class "row" ]
+                    [ H.div [ A.class "input-field col s6" ]
+                          [ H.input [ A.id "username", A.type_ "text", A.class "validate" ] []
+                          , H.label [ A.for "username"] [ text "Username" ]
+                          ]
+                    ]
+              , H.div [ A.class "row" ]
+                    [ H.div [ A.class "input-field col s6" ]
+                          [ H.input [ A.id "password", A.type_ "password", A.class "validate" ] []
+                          , H.label [ A.for "password"] [ text "Password" ]
+                          ]
+                    ]
+              , H.div [ A.class "row" ]
+                  [ H.button [ A.class "btn waves-effect waves-light", A.type_ "submit", A.name "action" ]
+                        [ text "Submit"
+                        , H.i [ A.class "material-icons right" ] [ text "send" ]
+                        ]
+                  ]
+              ]
+        ]
