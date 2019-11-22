@@ -100,7 +100,7 @@ view model =
     { title = "Phoenix and Elm"
     , body =
         [ viewNavbar ()
-        , viewFeed ()
+        , viewBody model.url
         ]
     }
 
@@ -112,9 +112,27 @@ viewNavbar _ =
                     [ H.li [] [ H.a [ A.href "/" ] [ H.i [ A.class "material-icons" ] [ text "home" ] ] ] ]
               , H.a [ A.href "#", A.class "brand-logo center" ] [ text "Logo" ]
               , H.ul [ A.class "right" ]
-                  [ H.li [] [ H.a [ A.href "#" ] [ H.i [ A.class "material-icons" ] [ text "person" ] ] ] ]
+                  [ H.li [] [ H.a [ A.href "login" ] [text "Sign in"] ]
+                  , H.li [] [ H.a [ A.href "#" ] [ H.i [ A.class "material-icons" ] [ text "person" ] ] ]
+                  ]
               ]
         ]
+
+viewBody : Url.Url -> Html msg
+viewBody url =
+    let
+        route = Parser.parse routeParser
+    in
+        case route url of
+            Just Feed ->
+                viewFeed ()
+
+            Just Login ->
+                viewLogin ()
+
+            Nothing ->
+                viewFeed ()
+
 
 viewFeed : () -> Html msg
 viewFeed _ =
@@ -134,3 +152,7 @@ viewFeed _ =
                   ]
               ]
         ]
+
+viewLogin : () -> Html msg
+viewLogin _ =
+    H.div [] [ text "LOGIN" ]
