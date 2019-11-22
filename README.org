@@ -9,10 +9,10 @@
 ** Starting the server
 
 To run the server locally:
-- Install dependencies `mix deps.get`
-- Start auxiliary services with docker-compose `docker-compose up -d`
-- Install Node.js dependencies `cd assets && npm install && cd ..`
-- Create and migrate database `mix ecto.setup`
-- Start server  `mix phx.server`
+- Install dependencies ~mix deps.get~
+- Start auxiliary services with docker-compose ~docker-compose up -d~
+- Install Node.js dependencies ~cd assets && npm install && cd ..~
+- Create and migrate database ~mix ecto.setup~
+- Start server ~mix phx.server~
 
-Now navigate to [`localhost:4000`](http://localhost:4000).
+Now navigate to [localhost:4000](http://localhost:4000).
