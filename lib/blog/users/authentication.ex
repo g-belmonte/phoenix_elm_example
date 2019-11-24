@@ -35,6 +35,8 @@ defmodule Blog.Users.Authentication do
     end
   end
 
+  def authenticate(_), do: {:error, "Incorrect params"}
+
   def validate_token(%{username: username, token: token}) do
     {:ok, conn} = Redix.start_link()
 
