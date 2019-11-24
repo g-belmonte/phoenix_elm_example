@@ -3,6 +3,7 @@
 
 - Elixir 1.9.2
 - Erlang/OTP 22
+- Elm 0.19
 - docker
 - docker-compose
 
