@@ -4,10 +4,10 @@ defmodule BlogWeb.AuthController do
 
   def login(conn, params) do
     case Authentication.authenticate(params) do
-      {:ok, token} ->
+      {:ok, token, username} ->
         conn
         |> put_resp_cookie("token", token)
-        |> json(%{"success" => "true"})
+        |> json(%{"username" => username})
 
       {:error, error} ->
         conn

@@ -14,7 +14,7 @@ defmodule Blog.Users.Authentication do
           case Redix.command(conn, ["GET", "#{username}"]) do
             {:ok, token} ->
               Redix.stop(conn)
-              {:ok, token}
+              {:ok, token, username}
 
             _ ->
               token = UUID.generate()
@@ -22,7 +22,7 @@ defmodule Blog.Users.Authentication do
               case Redix.command(conn, ["SET", "#{username}", "#{token}"]) do
                 {:ok, "OK"} ->
                   Redix.stop(conn)
-                  {:ok, token}
+                  {:ok, token, username}
 
                 {:error, reason} ->
                   Redix.stop(conn)
