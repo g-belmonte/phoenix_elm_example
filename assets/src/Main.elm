@@ -2,6 +2,7 @@ import Browser
 import Browser.Navigation as Navigation
 import Html as H exposing (Html, text)
 import Html.Attributes as A
+import Html.Events as E
 import Http
 import Json.Decode as Decode
 import Json.Encode as Encode
@@ -170,11 +171,11 @@ view model =
     { title = "Phoenix and Elm"
     , body =
         [ viewNavbar ()
-        , viewBody model.url
+        , viewBody model
         ]
     }
 
-viewNavbar : () -> Html msg
+viewNavbar : () -> Html Msg
 viewNavbar _ =
     H.nav []
         [ H.div [ A.class "nav-wrapper purple darken-1"]
@@ -188,23 +189,23 @@ viewNavbar _ =
               ]
         ]
 
-viewBody : Url.Url -> Html msg
-viewBody url =
+viewBody : Model -> Html Msg
+viewBody model =
     let
         route = Parser.parse routeParser
     in
-        case route url of
+        case route model.url of
             Just Feed ->
                 viewFeed ()
 
             Just Login ->
-                viewLogin ()
+                viewLogin model.userForm
 
             Nothing ->
                 viewFeed ()
 
 
-viewFeed : () -> Html msg
+viewFeed : () -> Html Msg
 viewFeed _ =
     H.div []
         [ H.table []
@@ -223,24 +224,24 @@ viewFeed _ =
               ]
         ]
 
-viewLogin : () -> Html msg
-viewLogin _ =
+viewLogin : UserFormData -> Html Msg
+viewLogin form =
     H.div [ A.class "row" ]
-        [ H.form [ A.action "#", A.class "col s6 offset-s4" ]
+        [ H.form [ A.action "/auth", A.method "post", A.class "col s6 offset-s4" ]
               [ H.div [ A.class "row" ]
                     [ H.div [ A.class "input-field col s6" ]
-                          [ H.input [ A.id "username", A.type_ "text", A.class "validate" ] []
+                          [ H.input [ A.name "username", A.type_ "text", A.value form.username, A.class "validate" ] []
                           , H.label [ A.for "username"] [ text "Username" ]
                           ]
                     ]
               , H.div [ A.class "row" ]
                     [ H.div [ A.class "input-field col s6" ]
-                          [ H.input [ A.id "password", A.type_ "password", A.class "validate" ] []
+                          [ H.input [ A.name "password", A.type_ "password", A.value form.password, A.class "validate" ] []
                           , H.label [ A.for "password"] [ text "Password" ]
                           ]
                     ]
               , H.div [ A.class "row" ]
-                  [ H.button [ A.class "btn waves-effect waves-light", A.type_ "submit", A.name "action" ]
+                  [ H.button [ A.class "btn waves-effect waves-light", E.onClick AuthRequest ]
                         [ text "Submit"
                         , H.i [ A.class "material-icons right" ] [ text "send" ]
                         ]
