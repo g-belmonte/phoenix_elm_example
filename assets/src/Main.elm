@@ -2,6 +2,7 @@ import Browser
 import Browser.Navigation as Navigation
 import Html as H exposing (Html, text)
 import Html.Attributes as A
+import Http
 import Url
 import Url.Parser as Parser exposing (Parser, (</>), oneOf)
 
