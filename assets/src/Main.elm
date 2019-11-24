@@ -32,11 +32,24 @@ type alias Model =
     { key : Navigation.Key
     , url : Url.Url
     , user: User
+    , userForm: UserFormData
     }
 
 init : () -> Url.Url -> Navigation.Key -> (Model, Cmd Msg)
 init flags url key =
-    (Model key url {username = "", state = Empty} , Cmd.none)
+    (Model key url initUser initUserFormData , Cmd.none)
+
+initUser : User
+initUser =
+    { username = ""
+    , state = Empty
+    }
+
+initUserFormData : UserFormData
+initUserFormData =
+    { username = ""
+    , password = ""
+    }
 
 type alias User =
     { username: String
@@ -47,6 +60,11 @@ type UserState
     = Empty
     | Loading
     | Loaded
+
+type alias UserFormData =
+    { username: String
+    , password: String
+    }
 
 -- =============================================================================
 --                                   ROUTER
