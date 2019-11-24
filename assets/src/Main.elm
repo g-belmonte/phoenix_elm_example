@@ -91,6 +91,8 @@ routeParser =
 type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
+    | AuthRequest
+    | GotAuth (Result Http.Error String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -109,6 +111,25 @@ update msg model =
              , Cmd.none
              )
 
+        AuthRequest ->
+            ( model, loginRequest model.userForm )
+
+        GotAuth result ->
+            case result of
+                Ok username ->
+                    let
+                        user = { username = username, state = Loaded }
+                    in
+                        ( { model | user = user }
+                        , Cmd.none
+                        )
+
+                Err _ ->
+                    ( { model | user = initUser }
+                    , Cmd.none
+                    )
+
+
 -- =============================================================================
 --                                    HTTP
 -- =============================================================================
@@ -116,10 +137,11 @@ update msg model =
 loginRequest : UserFormData -> Cmd Msg
 loginRequest form =
     let
-        data = Encode.encode 0 Encode.object
-               [ ( "username", Encode.string form.username )
-               , ( "password", Encode.string form.password )
-               ]
+        data =
+            Encode.object
+                [ ( "username", Encode.string form.username )
+                , ( "password", Encode.string form.password )
+                ]
     in
         Http.post
             { url = "localhost:4000/auth"
