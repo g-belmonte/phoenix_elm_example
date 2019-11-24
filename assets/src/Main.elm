@@ -3,6 +3,8 @@ import Browser.Navigation as Navigation
 import Html as H exposing (Html, text)
 import Html.Attributes as A
 import Http
+import Json.Decode as Decode
+import Json.Encode as Encode
 import Url
 import Url.Parser as Parser exposing (Parser, (</>), oneOf)
 
@@ -106,6 +108,24 @@ update msg model =
              ( { model | url = url }
              , Cmd.none
              )
+
+-- =============================================================================
+--                                    HTTP
+-- =============================================================================
+
+loginRequest : UserFormData -> Cmd Msg
+loginRequest form =
+    let
+        data = Encode.encode 0 Encode.object
+               [ ( "username", Encode.string form.username )
+               , ( "password", Encode.string form.password )
+               ]
+    in
+        Http.post
+            { url = "localhost:4000/auth"
+            , body = Http.jsonBody data
+            , expect = Http.expectJson GotAuth ( Decode.field "username" Decode.string )
+            }
 
 
 -- =============================================================================
