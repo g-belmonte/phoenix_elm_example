@@ -124,7 +124,7 @@ update msg model =
                         user = { username = username, state = Loaded }
                     in
                         ( { model | user = user }
-                        , Cmd.none
+                        , Navigation.pushUrl model.key "/"
                         )
 
                 Err _ ->
@@ -158,7 +158,7 @@ loginRequest form =
                 ]
     in
         Http.post
-            { url = "localhost:4000/auth"
+            { url = "/auth"
             , body = Http.jsonBody data
             , expect = Http.expectJson GotAuth ( Decode.field "username" Decode.string )
             }
@@ -226,7 +226,7 @@ viewBody model =
                 viewFeed ()
 
             Just Login ->
-                viewLogin model.userForm
+                viewLogin model.userForm model.user
 
             Nothing ->
                 viewFeed ()
@@ -251,8 +251,8 @@ viewFeed _ =
               ]
         ]
 
-viewLogin : UserForm -> Html Msg
-viewLogin form =
+viewLogin : UserForm -> User -> Html Msg
+viewLogin form user =
     H.div [ A.class "row" ]
         [ H.form [ E.onSubmit AuthRequest, A.class "col s6 offset-s4" ]
               [ H.div [ A.class "row" ]
@@ -262,16 +262,23 @@ viewLogin form =
                           ]
                     ]
               , H.div [ A.class "row" ]
-                    [ H.div [ A.class "input-field col s6" ]
-                          [ H.input [ A.name "password", A.type_ "password", A.value form.password, A.class "validate", E.onInput EnteredPassword] []
-                          , H.label [ A.for "password"] [ text "Password" ]
-                          ]
-                    ]
-              , H.div [ A.class "row" ]
-                  [ H.button [ A.class "btn waves-effect waves-light", A.type_ "submit" ]
-                        [ text "Submit"
-                        , H.i [ A.class "material-icons right" ] [ text "send" ]
+                  [ H.div [ A.class "input-field col s6" ]
+                        [ H.input [ A.name "password", A.type_ "password", A.value form.password, A.class "validate", E.onInput EnteredPassword] []
+                        , H.label [ A.for "password"] [ text "Password" ]
                         ]
+                  ]
+              , H.button [ A.class "btn waves-effect waves-light" ]
+                  [ text "Submit"
+                  , H.i [ A.class ( "material-icons right" ++ ( viewDisabledButton user.state ) ) ] [ text "send" ]
                   ]
               ]
         ]
+
+viewDisabledButton : UserState -> String
+viewDisabledButton state =
+    case state of
+        Loading ->
+            "disabled"
+
+        _ ->
+            ""
