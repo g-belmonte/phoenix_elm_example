@@ -35,12 +35,12 @@ type alias Model =
     { key : Navigation.Key
     , url : Url.Url
     , user: User
-    , userForm: UserFormData
+    , userForm: UserForm
     }
 
 init : () -> Url.Url -> Navigation.Key -> (Model, Cmd Msg)
 init flags url key =
-    (Model key url initUser initUserFormData , Cmd.none)
+    (Model key url initUser initUserForm , Cmd.none)
 
 initUser : User
 initUser =
@@ -48,8 +48,8 @@ initUser =
     , state = Empty
     }
 
-initUserFormData : UserFormData
-initUserFormData =
+initUserForm : UserForm
+initUserForm =
     { username = ""
     , password = ""
     }
@@ -64,7 +64,7 @@ type UserState
     | Loading
     | Loaded
 
-type alias UserFormData =
+type alias UserForm =
     { username: String
     , password: String
     }
@@ -94,6 +94,8 @@ type Msg
     | UrlChanged Url.Url
     | AuthRequest
     | GotAuth (Result Http.Error String)
+    | EnteredUsername String
+    | EnteredPassword String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -130,12 +132,23 @@ update msg model =
                     , Cmd.none
                     )
 
+        EnteredUsername username ->
+            updateUserForm (\form -> { form | username = username }) model
+
+        EnteredPassword password ->
+            updateUserForm (\form -> { form | password = password }) model
+
+updateUserForm: ( UserForm -> UserForm ) -> Model -> ( Model, Cmd Msg )
+updateUserForm transform model =
+    ( { model | userForm = transform model.userForm }, Cmd.none )
+
+
 
 -- =============================================================================
 --                                    HTTP
 -- =============================================================================
 
-loginRequest : UserFormData -> Cmd Msg
+loginRequest : UserForm -> Cmd Msg
 loginRequest form =
     let
         data =
@@ -170,24 +183,38 @@ view : Model -> Browser.Document Msg
 view model =
     { title = "Phoenix and Elm"
     , body =
-        [ viewNavbar ()
+        [ viewNavbar model
         , viewBody model
         ]
     }
 
-viewNavbar : () -> Html Msg
-viewNavbar _ =
+viewNavbar : Model -> Html Msg
+viewNavbar model =
     H.nav []
         [ H.div [ A.class "nav-wrapper purple darken-1"]
               [ H.ul [ A.class "left" ]
                     [ H.li [] [ H.a [ A.href "/" ] [ H.i [ A.class "material-icons" ] [ text "home" ] ] ] ]
               , H.a [ A.href "#", A.class "brand-logo center" ] [ text "Logo" ]
               , H.ul [ A.class "right" ]
-                  [ H.li [] [ H.a [ A.href "login" ] [ text "Sign in" ] ]
+                  [ viewUser model.user
                   , H.li [] [ H.a [ A.href "#" ] [ H.i [ A.class "material-icons" ] [ text "person" ] ] ]
                   ]
               ]
         ]
+
+viewUser : User -> Html Msg
+viewUser user =
+    case user.state of
+        Empty ->
+            H.li [] [ H.a [ A.href "login" ] [ text "Sign in" ] ]
+
+        Loading ->
+            H.li [] [ text "authenticating..." ]
+
+        Loaded ->
+            H.li [] [ text ("hello " ++ user.username ++ "!") ]
+
+
 
 viewBody : Model -> Html Msg
 viewBody model =
@@ -224,24 +251,24 @@ viewFeed _ =
               ]
         ]
 
-viewLogin : UserFormData -> Html Msg
+viewLogin : UserForm -> Html Msg
 viewLogin form =
     H.div [ A.class "row" ]
-        [ H.form [ A.action "/auth", A.method "post", A.class "col s6 offset-s4" ]
+        [ H.form [ E.onSubmit AuthRequest, A.class "col s6 offset-s4" ]
               [ H.div [ A.class "row" ]
                     [ H.div [ A.class "input-field col s6" ]
-                          [ H.input [ A.name "username", A.type_ "text", A.value form.username, A.class "validate" ] []
+                          [ H.input [ A.name "username", A.type_ "text", A.value form.username, A.class "validate", E.onInput EnteredUsername ] []
                           , H.label [ A.for "username"] [ text "Username" ]
                           ]
                     ]
               , H.div [ A.class "row" ]
                     [ H.div [ A.class "input-field col s6" ]
-                          [ H.input [ A.name "password", A.type_ "password", A.value form.password, A.class "validate" ] []
+                          [ H.input [ A.name "password", A.type_ "password", A.value form.password, A.class "validate", E.onInput EnteredPassword] []
                           , H.label [ A.for "password"] [ text "Password" ]
                           ]
                     ]
               , H.div [ A.class "row" ]
-                  [ H.button [ A.class "btn waves-effect waves-light", E.onClick AuthRequest ]
+                  [ H.button [ A.class "btn waves-effect waves-light", A.type_ "submit" ]
                         [ text "Submit"
                         , H.i [ A.class "material-icons right" ] [ text "send" ]
                         ]
