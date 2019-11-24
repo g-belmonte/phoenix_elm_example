@@ -31,13 +31,22 @@ main =
 type alias Model =
     { key : Navigation.Key
     , url : Url.Url
+    , user: User
     }
-
 
 init : () -> Url.Url -> Navigation.Key -> (Model, Cmd Msg)
 init flags url key =
-    ( Model key url, Cmd.none)
+    (Model key url {username = "", state = Empty} , Cmd.none)
 
+type alias User =
+    { username: String
+    , state: UserState
+    }
+
+type UserState
+    = Empty
+    | Loading
+    | Loaded
 
 -- =============================================================================
 --                                   ROUTER
