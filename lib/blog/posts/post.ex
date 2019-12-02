@@ -6,7 +6,7 @@ defmodule Blog.Posts.Post do
     field :title, :string
     field :contents, :string
 
-    belongs_to :user, Blog.Users.User
+    belongs_to :user, Blog.Users.User, references: :username
 
     timestamps(type: :utc_datetime_usec)
   end
