@@ -4,9 +4,7 @@ defmodule Blog.Posts do
   alias Blog.Users
 
   def get_by_id(%{id: id}) do
-    post =
-      %Post{}
-      |> Repo.get(id)
+    post = Repo.get(%Post{}, id)
 
     case post do
       nil -> {:error, "Post not found"}
@@ -15,9 +13,7 @@ defmodule Blog.Posts do
   end
 
   def create(%{author: username}, attrs) do
-    user =
-      %{username: username}
-      |> Users.get()
+    user = Users.get(%{username: username})
 
     case user do
       {:error, reason} ->
