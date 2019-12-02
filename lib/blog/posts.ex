@@ -25,4 +25,18 @@ defmodule Blog.Posts do
         {:ok, post}
     end
   end
+
+  def delete(args) do
+    case get_by_id(args) do
+      {:error, reason} -> {:error, reason}
+      {:ok, post} -> Repo.delete(post)
+    end
+  end
+
+  def update(id, attrs) do
+	  case get_by_id(id) do
+      {:error, reason} -> {:error, reason}
+      {:ok, post} -> Repo.update(post, attrs)
+    end
+  end
 end
