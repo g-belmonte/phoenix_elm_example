@@ -39,6 +39,4 @@ defmodule Blog.Users do
       {:ok, user} -> Repo.delete(user)
     end
   end
-
-  def delete(_), do: {:error, "Cannot delete user with these parameters"}
 end
