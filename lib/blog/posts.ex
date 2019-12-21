@@ -34,7 +34,7 @@ defmodule Blog.Posts do
   end
 
   def update(id, attrs) do
-	  case get_by_id(id) do
+    case get_by_id(id) do
       {:error, reason} -> {:error, reason}
       {:ok, post} -> Repo.update(post, attrs)
     end
