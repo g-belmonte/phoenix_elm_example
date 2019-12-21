@@ -59,7 +59,8 @@ defmodule Blog.MixProject do
       {:castore, ">= 0.0.0"},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.12", only: :test},
-      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
+      {:inch_ex, github: "rrrene/inch_ex", only: [:dev, :test]}
     ]
   end
 
