@@ -10,7 +10,8 @@ defmodule Blog.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -48,7 +49,8 @@ defmodule Blog.MixProject do
       {:absinthe_ecto, ">= 0.0.0"},
       {:redix, ">= 0.0.0"},
       {:castore, ">= 0.0.0"},
-      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.12", only: :test}
     ]
   end
 
