@@ -11,7 +11,15 @@ defmodule Blog.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      test_coverage: [tool: ExCoveralls]
+      test_coverage: [tool: ExCoveralls],
+
+      # Docs
+      name: "Blog",
+      source_url: "https://github.com/g-belmonte/phoenix_elm_example",
+      docs: [
+        main: "Blog",
+        extras: ["README.org"]
+      ]
     ]
   end
 
@@ -50,7 +58,8 @@ defmodule Blog.MixProject do
       {:redix, ">= 0.0.0"},
       {:castore, ">= 0.0.0"},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.12", only: :test}
+      {:excoveralls, "~> 0.12", only: :test},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
 
