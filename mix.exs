@@ -60,7 +60,8 @@ defmodule Blog.MixProject do
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.12", only: :test},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
-      {:inch_ex, github: "rrrene/inch_ex", only: [:dev, :test]}
+      {:inch_ex, github: "rrrene/inch_ex", only: [:dev, :test]},
+      {:guardian, "~> 2.0"}
     ]
   end
 
