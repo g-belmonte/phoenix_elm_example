@@ -15,12 +15,7 @@ defmodule Blog.Users do
 
   def get(_), do: {:error, "Cannot fetch user with these parameters"}
 
-  def create(%{password: password} = args) do
-    args =
-      args
-      |> Map.put(:password_hash, Base.encode16(:crypto.hash(:sha256, password)))
-      |> Map.delete(:password)
-
+  def create(args) do
     changeset = User.changeset(%User{}, args)
 
     if changeset.valid? do
@@ -30,8 +25,6 @@ defmodule Blog.Users do
       {:error, changeset}
     end
   end
-
-  def create(_), do: {:error, "Cannot create user with these parameters"}
 
   def delete(args) do
     case get(args) do
