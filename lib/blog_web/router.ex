@@ -18,7 +18,7 @@ defmodule BlogWeb.Router do
     post "/", AuthController, :login
   end
 
-  scope "/api" do
+  scope "/api/v1" do
     pipe_through :api
 
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: BlogWeb.Schema
