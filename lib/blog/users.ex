@@ -3,24 +3,17 @@ defmodule Blog.Users do
   alias Blog.Repo
 
   def get(%{username: username}) do
-    user =
-      User
-      |> Repo.get_by(username: username)
-
-    case user do
+    case Repo.get_by(User, username: username) do
       nil -> {:error, "User not found"}
       user -> {:ok, user}
     end
   end
 
-  def get(_), do: {:error, "Cannot fetch user with these parameters"}
-
   def create(args) do
     changeset = User.changeset(%User{}, args)
 
     if changeset.valid? do
-      changeset
-      |> Repo.insert()
+      Repo.insert(changeset)
     else
       {:error, changeset}
     end
