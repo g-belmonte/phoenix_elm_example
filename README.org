@@ -1,4 +1,7 @@
 * Phoenix and elm project
+** Important
+this project has been archived due to lack of interest and time
+
 ** Requirements
 
 - Elixir 1.9.2
